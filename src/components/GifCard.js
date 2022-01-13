@@ -1,5 +1,5 @@
 import react from 'react'
-import Search from './GifRegSearchField'
+// import Search from './GifRegSearchField'
 
 function GiphyCard () {
 
