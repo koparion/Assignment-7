@@ -1,36 +1,76 @@
-// import React, { useState } from "react";
-// import axios from "axios";
-// // import GiphyCard from './GifCard';
-// // import ReactDOM  from 'react';
+import React, { useState } from "react";
+import axios from "axios";
+import GiphyCard from "./GifCard";
+// import ReactDOM  from 'react';
 
-// function GiphyRegSearch() {
-// const API = "rccQGZ4FcBfr08fUwUOQsbBod383I8Aa";
+function GiphyRegSearch(props) {
+  const { random, setRandom, search, setSearch, list, setList } = props;
+  const [input, setInput] = useState('');
+  const trendURL =
+    "http://api.giphy.com/v1/gifs/trending?api_key=rccQGZ4FcBfr08fUwUOQsbBod383I8Aa";
+  const randURL =
+    "http://api.giphy.com/v1/gifs/random?api_key=rccQGZ4FcBfr08fUwUOQsbBod383I8Aa";
 
-// const search = event => {
-//   event.preventDefault();
-//   axios.get("http://api.giphy.com/v1/gifs/search?q="+searchField+"&api_key="+API).then((response)=>{
-//     setList(response.data);
-//   });
-// };
+  const API = "rccQGZ4FcBfr08fUwUOQsbBod383I8Aa";
 
-//   const handleChange = event =>
-//   {
-//     event.preventDefault();
-//     setSearch(event.data)
-//   }
+  //handling Trend Giphy function
+  const handleTrend = async (event) => {
+    event.preventDefault();
+    await axios.get(trendURL).then((response) => {
+      console.log(response.data.data);
+      setList(response.data.data);
+    }, []);
+  };
 
-//   return (
-//     <div>
-//       <form onSubmit={searchField}>
-//         <input
-//           type="text"
-//           value={gif}
-//           onChange={(event) => setGif(event.target.value)}
-//         ></input>
-//         <button placeholder="Search Gif"></button>
-//       </form>
-//     </div>
-//   );
-// } // end of function
+  const handleRandom = async (event) => {
+    event.preventDefault();
+    await axios.get(randURL).then((response) => {
+      setRandom([response.data.data]);
+    }, {});
+  };
+  // const handleChange = (event) => {
+  //   event.preventDefault();
+  //   console.log(event.target.value);
+  //   setSearch(event.target.value);
+  // };
 
-// export default GiphyRegSearch;
+const handleSearch = async event => {
+ event.preventDefault();
+    await axios.get("http://api.giphy.com/v1/gifs/search?q="+input+"&api_key="+API).then((response)=>{
+        setSearch(response.data.data);
+    },[]);
+  };
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    if(event.includes(' '))
+        event.replace(' ','+');
+    console.log(event.target.value);
+    setInput(event.target.value);
+  };
+
+  return (
+    // <div onLoadStart={handleChange}>
+    <>
+      <div>
+        <form> 
+        <button onClick={handleTrend}>Trending</button>
+        <button onClick={handleRandom}>Random</button>
+        <button onClick={handleSearch}type="submit">Search</button>
+        <input type="text" onChange={handleChange}></input>
+        </form>
+       
+        <GiphyCard
+          random={random}
+          setRandom={setRandom}
+          search={search}
+          setSearch={setSearch}
+          list={list}
+          setList={setList}
+        />
+      </div>
+    </>
+  );
+}
+
+export default GiphyRegSearch;

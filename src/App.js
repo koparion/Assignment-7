@@ -5,18 +5,25 @@ import React, { useState, ReactDOM } from "react";
 
 function App() {
   const [search, setSearch] = useState("");
-  const [results, setResults] = useState([]);
+  const [random, setRandom] = useState([]);
   const [error, setError] = useState(false);
+  const [list, setList] = useState([]);
 
   return (
     <div className="App">
       <h1>Title</h1>
-      <GifTrending 
+      {/* <GifTrending 
       results={results} 
       setResults={setResults}
       search={search}
-      setSearch={setSearch} />
-      {/* <GifRegSearchField/> */}
+      setSearch={setSearch} /> */}
+      <GifRegSearchField  
+      random={random} 
+      setRandom={setRandom}
+      search={search}
+      setSearch={setSearch}
+      list={list}
+      setList={setList}/>
     </div>
   );
 }
