@@ -10,7 +10,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Giphy Search</h1>
+      <h1 className="bg-info">Giphy Search</h1>
       <GifRegSearchField  
       random={random} 
       setRandom={setRandom}

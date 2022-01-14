@@ -10,7 +10,8 @@ function GiphyCard(props) {
       {randomsearch &&
         random.map((element) => {
           return (
-            <div className="container">
+            <div className="container p-2 justify-content-center">
+            
                 <ul>
                   <li key={element.id} className="card-img">
                     <a href={element.url}>
@@ -27,7 +28,7 @@ function GiphyCard(props) {
       {searching &&
         search.map((element) => {
           return (
-            <div className="container">
+            <div className="container p-2 justify-content-center">
               <ul>
                 <li key={element.id} className="card-img">
                   <a href={element.url}>
@@ -45,7 +46,7 @@ function GiphyCard(props) {
       {trending &&
         list.map((element) => {
           return (
-            <div className="container">  
+            <div className="container p-2"> 
               <ul>
                 <li key={element.id} className="card-img">
                   <a href={element.url}>
