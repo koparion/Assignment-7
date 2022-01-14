@@ -2,11 +2,11 @@ import react from "react";
 // import Search from './GifRegSearchField'
 
 function GiphyCard(props) {
-  const { random, search, list } = props;
+  const { random, search, list, randomsearch , searching, trending } = props;
 
   return (
     <>
-      {random.map((element) => {
+      {randomsearch && random.map((element) => {
         return (
           <div className="container">
             <ul>
@@ -22,7 +22,7 @@ function GiphyCard(props) {
           </div>
         );
       })}
-      {search.map((element) => {
+      {searching && search.map((element) => {
         return (
           <div className="container">
             <ul>
@@ -38,7 +38,7 @@ function GiphyCard(props) {
           </div>
         );
       })}
-      {list.map((element) => {
+      {trending && list.map((element) => {
         return (
           <div className="container">
             <ul>

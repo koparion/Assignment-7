@@ -12,12 +12,6 @@ function App() {
   return (
     <div className="App">
       <h1>Giphy Search</h1>
-      
-      {/* <GifTrending 
-      results={results} 
-      setResults={setResults}
-      search={search}
-      setSearch={setSearch} /> */}
       <GifRegSearchField  
       random={random} 
       setRandom={setRandom}

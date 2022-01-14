@@ -6,6 +6,9 @@ import GiphyCard from "./GifCard";
 function GiphyRegSearch(props) {
   const { random, setRandom, search, setSearch, list, setList } = props;
   const [input, setInput] = useState({});
+  const [itsRandom, setItsRandom] = useState(false);
+  const [itsSearching, setItsSearching] = useState(false);
+  const [itsTrend, setsItsTrend] = useState(false);
   const trendURL =
     "http://api.giphy.com/v1/gifs/trending?api_key=rccQGZ4FcBfr08fUwUOQsbBod383I8Aa";
   const randURL =
@@ -16,6 +19,9 @@ function GiphyRegSearch(props) {
   //handling Trend Giphy function
   const handleTrend = async (event) => {
     event.preventDefault();
+    setsItsTrend(true);
+    setItsRandom(false);
+    setItsSearching(false);
     await axios.get(trendURL).then((response) => {
       console.log(response.data.data);
       setList(response.data.data);
@@ -24,6 +30,9 @@ function GiphyRegSearch(props) {
   // handling random giphy function
   const handleRandom = async (event) => {
     event.preventDefault();
+    setItsRandom(true);
+    setsItsTrend(false);
+    setItsSearching(false);
     await axios.get(randURL).then((response) => {
       setRandom([response.data.data]);
     }, {});
@@ -31,13 +40,11 @@ function GiphyRegSearch(props) {
   // handle search giphy function
   const handleSearch = async (event) => {
     event.preventDefault();
+    setItsRandom(false);
+    setsItsTrend(false);
+    setItsSearching(true);
     await axios
-      .get(
-        "http://api.giphy.com/v1/gifs/search?q=" +
-          input +
-          "&api_key=" +
-          API
-      )
+      .get("http://api.giphy.com/v1/gifs/search?q=" + input + "&api_key=" + API)
       .then((response) => {
         setSearch(response.data.data);
       }, []);
@@ -52,7 +59,6 @@ function GiphyRegSearch(props) {
     // <div onLoadStart={handleChange}>
     <>
       <div>
-        
         <form onSubmit={handleSearch}>
           <button value="submit" type="submit">
             Search
@@ -63,9 +69,16 @@ function GiphyRegSearch(props) {
             placeholder="search giphy"
           ></input>
           <button onClick={handleTrend}>Trending</button>
-        <button onClick={handleRandom}>Random</button>
+          <button onClick={handleRandom}>Random</button>
         </form>
-        <GiphyCard random={random} search={search} list={list} />
+        <GiphyCard
+          random={random}
+          search={search}
+          list={list}
+          randomsearch={itsRandom}
+          searching={itsSearching}
+          trending={itsTrend}
+        />
       </div>
     </>
   );
