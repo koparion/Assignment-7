@@ -4,14 +4,15 @@ import GifTrending from "./components/GifTrending";
 import React, { useState, ReactDOM } from "react";
 
 function App() {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState([]);
   const [random, setRandom] = useState([]);
   const [error, setError] = useState(false);
   const [list, setList] = useState([]);
 
   return (
     <div className="App">
-      <h1>Title</h1>
+      <h1>Giphy Search</h1>
+      
       {/* <GifTrending 
       results={results} 
       setResults={setResults}

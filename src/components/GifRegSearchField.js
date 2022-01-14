@@ -5,7 +5,7 @@ import GiphyCard from "./GifCard";
 
 function GiphyRegSearch(props) {
   const { random, setRandom, search, setSearch, list, setList } = props;
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState({});
   const trendURL =
     "http://api.giphy.com/v1/gifs/trending?api_key=rccQGZ4FcBfr08fUwUOQsbBod383I8Aa";
   const randURL =
@@ -21,30 +21,29 @@ function GiphyRegSearch(props) {
       setList(response.data.data);
     }, []);
   };
-
+  // handling random giphy function
   const handleRandom = async (event) => {
     event.preventDefault();
     await axios.get(randURL).then((response) => {
       setRandom([response.data.data]);
     }, {});
   };
-  // const handleChange = (event) => {
-  //   event.preventDefault();
-  //   console.log(event.target.value);
-  //   setSearch(event.target.value);
-  // };
-
-const handleSearch = async event => {
- event.preventDefault();
-    await axios.get("http://api.giphy.com/v1/gifs/search?q="+input+"&api_key="+API).then((response)=>{
-        setSearch(response.data.data);
-    },[]);
-  };
-
-  const handleChange = (event) => {
+  // handle search giphy function
+  const handleSearch = async (event) => {
     event.preventDefault();
-    if(event.includes(' '))
-        event.replace(' ','+');
+    await axios
+      .get(
+        "http://api.giphy.com/v1/gifs/search?q=" +
+          input +
+          "&api_key=" +
+          API
+      )
+      .then((response) => {
+        setSearch(response.data.data);
+      }, []);
+  };
+  // when button is pressed for search, will handle change
+  const handleChange = (event) => {
     console.log(event.target.value);
     setInput(event.target.value);
   };
@@ -53,21 +52,20 @@ const handleSearch = async event => {
     // <div onLoadStart={handleChange}>
     <>
       <div>
-        <form> 
-        <button onClick={handleTrend}>Trending</button>
+        
+        <form onSubmit={handleSearch}>
+          <button value="submit" type="submit">
+            Search
+          </button>
+          <input
+            type="text"
+            onChange={handleChange}
+            placeholder="search giphy"
+          ></input>
+          <button onClick={handleTrend}>Trending</button>
         <button onClick={handleRandom}>Random</button>
-        <button onClick={handleSearch}type="submit">Search</button>
-        <input type="text" onChange={handleChange}></input>
         </form>
-       
-        <GiphyCard
-          random={random}
-          setRandom={setRandom}
-          search={search}
-          setSearch={setSearch}
-          list={list}
-          setList={setList}
-        />
+        <GiphyCard random={random} search={search} list={list} />
       </div>
     </>
   );

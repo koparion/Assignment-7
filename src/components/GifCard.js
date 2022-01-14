@@ -2,7 +2,7 @@ import react from "react";
 // import Search from './GifRegSearchField'
 
 function GiphyCard(props) {
-  const { random, setRandom, search, setSearch, list, setList } = props;
+  const { random, search, list } = props;
 
   return (
     <>
